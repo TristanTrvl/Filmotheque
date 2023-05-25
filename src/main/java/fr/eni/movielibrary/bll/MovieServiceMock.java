@@ -1,4 +1,4 @@
-package fr.eni.movielibrary.service.mock;
+package fr.eni.movielibrary.bll;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,33 +9,31 @@ import org.springframework.stereotype.Service;
 import fr.eni.movielibrary.bo.Genre;
 import fr.eni.movielibrary.bo.Movie;
 import fr.eni.movielibrary.bo.Participant;
-import fr.eni.movielibrary.bll.MovieService;
 
 @Service
 @Profile("dev")
 public class MovieServiceMock implements MovieService {
     // Attributs static pour gérer les valeurs à afficher
-    private static List<Movie> lstMovies;
-    private static List<Genre> lstGenres;
-    private static List<Participant> lstParticipants;
+    private static List<Movie> movies;
+    private static List<Genre> genres;
+    private static List<Participant> participants;
 
-    private static final String[] genres = { "Animation", "Science-fiction", "Documentaire", "Action", "Comédie",
-            "Drame" };
+    private static final String[] mockGenres = { "Animation", "Science-fiction", "Documentaire", "Action", "Comédie", "Drame" };
 
     public MovieServiceMock() {
-        // Création de la liste des genres
-        lstGenres = new ArrayList<>();
-        for (int index = 0; index < genres.length; index++) {
-            lstGenres.add(new Genre(index + 1, genres[index]));
+        // Création de la liste des mockGenres
+        genres = new ArrayList<>();
+        for (int index = 0; index < mockGenres.length; index++) {
+            genres.add(new Genre(index + 1, mockGenres[index]));
         }
 
         // Création de la liste des participants
-        lstParticipants = new ArrayList<>();
+        participants = new ArrayList<>();
         // 2 réalisateurs dont 1 pour 2 films
         Participant stevenSpielberg = new Participant(1, "Spielberg", "Steven");
         Participant davidCronenberg = new Participant(2, "Cronenberg", "David");
-        lstParticipants.add(stevenSpielberg);
-        lstParticipants.add(davidCronenberg);
+        participants.add(stevenSpielberg);
+        participants.add(davidCronenberg);
 
         // 2 acteurs par film et l'un d'eux dans 2 films
         Participant richardAttenborough = new Participant(3, "Attenborough", "Richard");
@@ -43,54 +41,51 @@ public class MovieServiceMock implements MovieService {
         List<Participant> actorsJurassicPark = new ArrayList<>();
         actorsJurassicPark.add(richardAttenborough);
         actorsJurassicPark.add(jeffGoldblum);
-        lstParticipants.addAll(actorsJurassicPark);
+        participants.addAll(actorsJurassicPark);
 
         Participant geenaDavis = new Participant(5, "Davis", "Geena");
         List<Participant> actorsTheFly = new ArrayList<>();
         actorsTheFly.add(jeffGoldblum);
         actorsTheFly.add(geenaDavis);
-        lstParticipants.add(geenaDavis);
+        participants.add(geenaDavis);
 
         Participant markRylance = new Participant(6, "Rylance", "Mark");
         Participant rubyBarnhill = new Participant(7, "Barnhill", "Ruby");
         List<Participant> actorsTheBFG = new ArrayList<>();
         actorsTheBFG.add(markRylance);
         actorsTheBFG.add(rubyBarnhill);
-        lstParticipants.addAll(actorsTheBFG);
+        participants.addAll(actorsTheBFG);
 
         // Création de la liste de films
         // 3 films
-        lstMovies = new ArrayList<>();
-        Movie jurassicPark = new Movie(1, "Jurassic Park", 1993, 128,
-                "Le film raconte l'histoire d'un milliardaire et son équipe de généticiens parvenant à ramener à la vie des dinosaures grâce au clonage.");
-        jurassicPark.setGenre(lstGenres.get(1));
+        movies = new ArrayList<>();
+        Movie jurassicPark = new Movie(1, "Jurassic Park", 1993, 128, "Le film raconte l'histoire d'un milliardaire et son équipe de généticiens parvenant à ramener à la vie des dinosaures grâce au clonage.");
+        jurassicPark.setGenre(genres.get(1));
         jurassicPark.setDirector(stevenSpielberg);
         jurassicPark.setActors(actorsJurassicPark);
-        lstMovies.add(jurassicPark);
+        movies.add(jurassicPark);
 
-        Movie theFly = new Movie(2, "The Fly", 1986, 95,
-                "Il s'agit de l'adaptation cinématographique de la nouvelle éponyme de l'auteur George Langelaan.");
-        theFly.setGenre(lstGenres.get(1));
+        Movie theFly = new Movie(2, "The Fly", 1986, 95, "Il s'agit de l'adaptation cinématographique de la nouvelle éponyme de l'auteur George Langelaan.");
+        theFly.setGenre(genres.get(1));
         theFly.setDirector(davidCronenberg);
         theFly.setActors(actorsTheFly);
-        lstMovies.add(theFly);
+        movies.add(theFly);
 
-        Movie theBFG = new Movie(3, "The BFG", 2016, 117,
-                "Le Bon Gros Géant est un géant bien différent des autres habitants du Pays des Géants.");
-        theBFG.setGenre(lstGenres.get(4));
+        Movie theBFG = new Movie(3, "The BFG", 2016, 117, "Le Bon Gros Géant est un géant bien différent des autres habitants du Pays des Géants.");
+        theBFG.setGenre(genres.get(4));
         theBFG.setDirector(stevenSpielberg);
         theBFG.setActors(actorsTheBFG);
-        lstMovies.add(theBFG);
+        movies.add(theBFG);
     }
 
     @Override
     public List<Movie> getAllMovies() {
-        return lstMovies;
+        return movies;
     }
 
     @Override
     public Movie getMovieById(long id) {
-        for (Movie movie : lstMovies) {
+        for (Movie movie : movies) {
             if (movie.getId() == id) {
                 return movie;
             }
@@ -100,17 +95,17 @@ public class MovieServiceMock implements MovieService {
 
     @Override
     public List<Genre> getGenres() {
-        return lstGenres;
+        return genres;
     }
 
     @Override
     public List<Participant> getParticipants() {
-        return lstParticipants;
+        return participants;
     }
 
     @Override
     public Genre getGenreById(long id) {
-        for (Genre genre : lstGenres) {
+        for (Genre genre : genres) {
             if (genre.getId() == id) {
                 return genre;
             }
@@ -120,7 +115,7 @@ public class MovieServiceMock implements MovieService {
 
     @Override
     public Participant getParticipantById(long id) {
-        for (Participant participant : lstParticipants) {
+        for (Participant participant : participants) {
             if (participant.getId() == id) {
                 return participant;
             }
@@ -130,6 +125,6 @@ public class MovieServiceMock implements MovieService {
 
     @Override
     public void saveMovie(Movie movie) {
-        lstMovies.add(movie);
+        movies.add(movie);
     }
 }
