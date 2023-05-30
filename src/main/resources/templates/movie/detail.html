@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Film | Filmotheque</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header>
+        <h1><a th:href="@{'/'}">Filmotheque</a></h1>
+    </header>
+    <main class="wrapper">
+        <h2>Film - Detail</h2>
+        <form action="" method="get">
+            <div>
+                <input type="text" name="title" id="title" th:field="${movie.title}">
+            </div>
+            <div>
+                <textarea name="synopsis" id="synopsis" cols="30" rows="10" th:field="${movie.synopsis}"></textarea>
+            </div>
+            <div>
+                <input type="text" name="full_name" id="full_name" th:field="${movie.director.fullName}">
+            </div>
+            <div>
+                <select multiple name="actors" id="actors">
+                    <option th:each="actor : ${movie.actors}" th:text="${actor.firstName}"></option>
+                </select>
+            </div>
+            <button type="submit">Submit</button>
+        </form>
+    </main>
+    <footer></footer>
+</body>
+</html>
