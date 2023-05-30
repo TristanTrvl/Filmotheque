@@ -43,6 +43,8 @@ public class Participant {
         this.lastName = lastName;
     }
 
+    public String getFullName() { return lastName + " " + firstName; }
+
     public List<Movie> getMoviesAsActor() {
         return moviesAsActor;
     }
